@@ -48,38 +48,138 @@ makes a network call to upload the data.
 
 No preference as to the modality of the dialog, whether a new screen is required, etc.
 
-# Network Calls
-All interactions use HTTPS.
+# Network API
+All interactions use HTTPS,
+and must include this HTTP header:
+
+    Authorization: Bearer ...
+
+(where `"..."` is an access token provided by the operator and "baked into" the application).
+
 All HTML bodies are JSON.
-Precise details are TBD.
 
 (There is some thinking on what is needed for a FCS;
 accordingly, some of the fields below are presently defaults for future use.)
 
-## Submit Entry
-`POST` request  with:
+## Create an entry
 
-- owner UUID (generated for each post)
-- category (i.e., `'green-iguana'`)
-- position: longitude, latitude, (optional) elevation 
-- photo
-- (optional) description
+Supply the `privateID` (a new UUIDv4):
 
-Response with:
+    curl -X POST "http://127.0.0.1:3004/v1/entry" \
+      -H "accept: application/json"               \
+      -H "Content-Type: application/json"         \
+      -H "Authorization: Bearer ..."
+      -d "{ \"privateID\"   : \"b2d25937-14f1-48b1-9cf3-7cfeb17b13dd\"
+          , \"description\" : \"CEC HQ\"
+          , \"category\"    : \"green-iguana\"
+          , \"location\"    : { \"longitude\": 19.299706, \"latitude\": -81.381807 }
+          , \"image\"       : { \"data\": insert-the-contents-of-documentation/igbgd-base64.txt  }
+          }"
 
-- Public UUID
+Mandatory payload:
 
-## Get Entries
-`GET` request with geofence parameters:
+- `privateID` must be a new [UUIDv4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random));
 
-- shape: `'circle'`
-    - center position
-    - radius in meters
+- `category` (must be `"green-iguana"`);
 
-The server responds with an array of matching entries.
-each containing:
+- `location.longitude` and  `location.latitude`; and,
 
-- the public UUID assigned by the server on creation
+- `image.data` must be a [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) file encoded using
+[base64](https://en.wikipedia.org/wiki/Base64)
 
-- all information that was submitted,
-EXCEPT that the owner UUID is omitted
+
+Optional payload:
+
+- `description`
+
+On success,
+the server stores the entry and returns the `publicID`:
+
+    {
+      "publicID": "77d29272-25c4-4521-ba1a-e33342d8f04b"
+    }
+
+The application should persist the `privateID` it creates,
+as some operations require this.
+
+The application should also persist the corresponding `publicID` the server creates,
+so entries may be displayed as either created by this user or another user.
+
+## Find nearby entries
+
+Supply the geolocation and the radius (e.g., 2000 meters):
+
+    curl -X GET "http://127.0.0.1:3004/v1/entries/circle/2000?longitude=19.348461&latitude=-81.381988"  \
+      -H "accept: application/json"                                                                     \
+      -H "Authorization: Bearer ..."
+
+Mandatory parameters:
+
+- longitude and latitude; and,
+
+- radius (in meters)
+
+Optional parameters:
+
+- `category` (must be `"green-iguana"`); and,
+
+- `limit` on the number of returned entries (must not exceed 25)
+
+On success,
+the server returns an array of entries:
+
+    [
+      { "publicID"    : "77d29272-25c4-4521-ba1a-e33342d8f04b"
+      , "description" : "CEC HQ"
+      , "category"    : "green-iguana"
+      , "location"    :
+        { "longitude" : 19.299706
+        , "latitude"  : -81.381807
+        },
+      , "image":
+         { "data"     : "..."
+         , "format"   : "png"
+         , "width"    : 64
+         , "height"   : 64
+        }
+      }
+    ]
+
+## Retrieve an entry
+
+Supply the `privateID`:
+
+    curl -X GET "http://127.0.0.1:3004/v1/entry/b2d25937-14f1-48b1-9cf3-7cfeb17b13dd" \
+      -H "accept: application/json"                                                   \
+      -H "Authorization: Bearer ..."
+
+On success,
+the server returns that entry:
+
+    { "publicID"    : "77d29272-25c4-4521-ba1a-e33342d8f04b"
+    , "description" : "CEC HQ"
+    , "category"    : "green-iguana"
+    , "location"    :
+      { "longitude" : 19.299706
+      , "latitude"  : -81.381807
+      },
+    , "image":
+       { "data"     : "..."
+       , "format"   : "png"
+       , "width"    : 64
+       , "height"   : 64
+      }
+    }
+
+## Remove an entry
+
+Supply the `privateID`:
+
+    curl -X DELETE "http://127.0.0.1:3004/v1/entry/b2d25937-14f1-48b1-9cf3-7cfeb17b13dd" \
+      -H "accept: application/json"                                                      \
+      -H "Authorization: Bearer ..."
+
+On success,
+the server returns an empty object:
+
+    { }
