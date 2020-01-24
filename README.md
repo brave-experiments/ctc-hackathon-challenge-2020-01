@@ -80,7 +80,7 @@ Supply the `privateID` (a new UUIDv4):
           , \"description\" : \"CEC HQ\"
           , \"category\"    : \"green-iguana\"
           , \"location\"    : { \"longitude\": 19.299706, \"latitude\": -81.381807 }
-          , \"image\"       : { \"data\": insert-the-contents-of-documentation/igbgd-base64.txt  }
+          , \"image\"       : { \"data\": \"...base64 encoded text...\"  }
           }"
 
 Mandatory payload:
@@ -144,7 +144,7 @@ the server returns an array of entries:
         , "latitude"  : -81.381807
         },
       , "image":
-         { "data"     : "..."
+         { "data"     : "...base64 encoded text..."
          , "format"   : "png"
          , "width"    : 64
          , "height"   : 64
@@ -171,7 +171,7 @@ the server returns that entry:
       , "latitude"  : -81.381807
       },
     , "image":
-       { "data"     : "..."
+       { "data"     : "...base64 encoded text..."
        , "format"   : "png"
        , "width"    : 64
        , "height"   : 64
