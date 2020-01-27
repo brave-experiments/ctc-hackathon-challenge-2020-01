@@ -75,10 +75,10 @@ Supply the `privateID` (a new UUIDv4):
     curl -X POST "http://127.0.0.1:3004/v1/entry" \
       -H "accept: application/json"               \
       -H "Content-Type: application/json"         \
-      -H "Authorization: Bearer ..."
+      -H "Authorization: Bearer ..."              \
       -d "{ \"privateID\"   : \"b2d25937-14f1-48b1-9cf3-7cfeb17b13dd\"
-          , \"description\" : \"CEC HQ\"
           , \"category\"    : \"green-iguana\"
+          , \"description\" : \"CEC HQ\"
           , \"location\"    : { \"longitude\": 19.299706, \"latitude\": -81.381807 }
           , \"image\"       : { \"data\": \"...base64 encoded text...\"  }
           }"
@@ -89,21 +89,19 @@ Mandatory payload:
 
 - `category` (must be `"green-iguana"`);
 
+- `description` (may be empty);
+
 - `location.longitude` and  `location.latitude`; and,
 
 - `image.data` must be a [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) file encoded using
 [base64](https://en.wikipedia.org/wiki/Base64)
 
 
-Optional payload:
-
-- `description`
-
 On success,
 the server stores the entry and returns the `publicID`:
 
     {
-      "publicID": "77d29272-25c4-4521-ba1a-e33342d8f04b"
+      "publicID": "bdc8d077-d710-434e-9d9b-ba21781199af"
     }
 
 The application should persist the `privateID` it creates,
@@ -136,9 +134,10 @@ On success,
 the server returns an array of entries:
 
     [
-      { "publicID"    : "77d29272-25c4-4521-ba1a-e33342d8f04b"
-      , "description" : "CEC HQ"
+      { "publicID"    : "bdc8d077-d710-434e-9d9b-ba21781199af"
+      , "id"          : "ability armed tongue dove wife aware bounce polar danger pear rose edit curious"
       , "category"    : "green-iguana"
+      , "description" : "CEC HQ"
       , "location"    :
         { "longitude" : 19.299706
         , "latitude"  : -81.381807
@@ -163,9 +162,10 @@ Supply the `privateID`:
 On success,
 the server returns that entry:
 
-    { "publicID"    : "77d29272-25c4-4521-ba1a-e33342d8f04b"
-    , "description" : "CEC HQ"
+    { "publicID"    : "bdc8d077-d710-434e-9d9b-ba21781199af"
+    , "id"          : "ability armed tongue dove wife aware bounce polar danger pear rose edit curious"
     , "category"    : "green-iguana"
+    , "description" : "CEC HQ"
     , "location"    :
       { "longitude" : 19.299706
       , "latitude"  : -81.381807
@@ -177,6 +177,22 @@ the server returns that entry:
        , "height"   : 64
       }
     }
+
+## Update an entry
+
+Supply the `privateID` and the values to update:
+
+    curl -X PUT "http://127.0.0.1:3004/v1/entry/b2d25937-14f1-48b1-9cf3-7cfeb17b13dd" \
+      -H "accept: application/json"                                                   \
+      -H "Content-Type: application/json"                                             \
+      -H "Authorization: Bearer ..."                                                  \
+      -d "{ \"category\"    : \"green-iguana\"
+          , \"description\" : \"CEC HQ\"
+          , \"location\"    : { \"longitude\": 19.299706, \"latitude\": -81.381807 }
+          , \"image\"       : { \"data\": \"...base64 encoded text...\"  }
+          }"
+
+The payload must contain at least one of these four properties.
 
 ## Remove an entry
 
