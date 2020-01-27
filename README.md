@@ -135,7 +135,6 @@ the server returns an array of entries:
 
     [
       { "publicID"    : "bdc8d077-d710-434e-9d9b-ba21781199af"
-      , "id"          : "ability armed tongue dove wife aware bounce polar danger pear rose edit curious"
       , "category"    : "green-iguana"
       , "description" : "CEC HQ"
       , "location"    :
@@ -148,6 +147,9 @@ the server returns an array of entries:
          , "width"    : 64
          , "height"   : 64
         }
+      , "metadata":
+         {
+         }
       }
     ]
 
@@ -163,7 +165,6 @@ On success,
 the server returns that entry:
 
     { "publicID"    : "bdc8d077-d710-434e-9d9b-ba21781199af"
-    , "id"          : "ability armed tongue dove wife aware bounce polar danger pear rose edit curious"
     , "category"    : "green-iguana"
     , "description" : "CEC HQ"
     , "location"    :
@@ -176,6 +177,9 @@ the server returns that entry:
        , "width"    : 64
        , "height"   : 64
       }
+    , "metadata":
+     { 
+     }
     }
 
 ## Update an entry
