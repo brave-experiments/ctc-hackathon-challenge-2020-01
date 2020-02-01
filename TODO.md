@@ -19,6 +19,7 @@
 # iOS application
 ## Correctness
 - `MainViewController::updateMapPins` should calculate the distance from the center of the map to a corner and use that value as the radius parameter to `IguanaClient.default.getEntries`.
+(At present, it appears to ask for things with 50m of the current location.)
     
 - A call to `IguanaClient.default.getEntries` should be made after 60 seconds of inactivity as the active app.
     
