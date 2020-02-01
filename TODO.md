@@ -12,10 +12,7 @@
     
 ## Provisioning
 - Determine how to obscure IP addresses to the server
-
-## Documentation
-- Explain `publicID` vs. `privateID`
-
+    
 ## API
 - Add a `/v1/region/{regionID}/feed` call for [RSS](https://en.wikipedia.org/wiki/RSS) clients.
     
@@ -55,7 +52,7 @@
 - There should be a "Settings" icon that transitions to a panel that contains:
     
     - any "actual" settings;
-    - Privacy Policy (TBD); and,
+    - Privacy Policy (obscured IP addresses, privateID); and,
     - Terms and Conditions
     
 - There should be a pre-build script that let's the developer select the
@@ -67,8 +64,6 @@ Find someone to write one with feature-parity to the iOS application.
 # Operator map
 - The entry detail popup should contain:
 
-    - all metadata;
-    - reverse geocoding information; and,    
     - a link to approve/delete the entry.
     
 - Add a [sidebar](https://github.com/nickpeihl/leaflet-sidebar-v2/):
@@ -76,19 +71,3 @@ Find someone to write one with feature-parity to the iOS application.
     - select which region(s) to poll;
     - add a ["Locate Me" button](https://github.com/domoritz/leaflet-locatecontrol); and,
     - add an [auto-completion bar](https://github.com/utahemre/Leaflet.GeoJSONAutocomplete).
-    
-- Determine whether an entry's popup needs to be [responsive](https://github.com/yafred/leaflet-responsive-popup).
-
-Note that [OpenStreetMap](https://www.openstreetmap.org/) doesn't seem
-to have much data for reverse geocoding in the KY, cf., compare
-
-    LON=-81.38185
-    LAT=19.299736
-    
-    https://api.mapbox.com/geocoding/v5/mapbox.places/$LON,$LAT.json?types=address,poi
-        &access_token=...
-
-    
-    https://maps.googleapis.com/maps/api/geocode/json?latlng=$LAT,$LON
-        &result_type=subpremise|premise|street_address|point_of_interest
-        &key=YOUR_API_KEY
