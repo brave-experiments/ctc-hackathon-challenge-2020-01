@@ -1,7 +1,12 @@
 # TODO
 
-# Server-side
+# Assets
+- App icon for iOS
+- Marker icons:
+    - iOS: public and private
+    - Operator map: approved or not
     
+# Server-side    
 ## Workflow
 - Add workflow `approved/authority` metadata
     
@@ -15,7 +20,6 @@
 - Add a `/v1/region/{regionID}/feed` call for [RSS](https://en.wikipedia.org/wiki/RSS) clients.
     
 # iOS application
-
 ## Correctness
 - `MainViewController::updateMapPins` should calculate the distance from the center of the map to a corner and use that value as the radius parameter to `IguanaClient.default.getEntries`.
     
