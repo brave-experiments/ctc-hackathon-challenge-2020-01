@@ -9,6 +9,12 @@
 # Server-side    
 ## Workflow
 - Remove temporary metadata for `approved/authority`
+
+- Data reducation
+
+- Data aging
+
+- Statistical analysis
     
 ## Provisioning
 - Determine how to obscure IP addresses to the server
