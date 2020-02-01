@@ -8,7 +8,7 @@
     
 # Server-side    
 ## Workflow
-- Add workflow `approved/authority` metadata
+- Remove temporary metadata for `approved/authority`
     
 ## Provisioning
 - Determine how to obscure IP addresses to the server
